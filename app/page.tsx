@@ -3,8 +3,8 @@ import Image, { getImageProps } from "next/image";
 import localFont from "next/font/local";
 const BillingPlan = { STARTER: "STARTER", GROWTH: "GROWTH", PORTFOLIO: "PORTFOLIO" } as const;
 import {
-  ArrowDown,
   ArrowRight,
+  ArrowUpRight,
   Check,
   ChevronDown,
   FileSpreadsheet,
@@ -59,8 +59,7 @@ const navigation = [
   ["#demo", "Demo"],
   ["#workflow", "How it works"],
   ["#pricing", "Plans"],
-  ["#support", "Support"],
-  ["#faq", "FAQ"],
+  ["#faq", "Questions"],
 ] as const;
 
 const workflowSteps = [
@@ -72,7 +71,7 @@ const workflowSteps = [
   {
     icon: Languages,
     title: "Write it once. Make it clear.",
-    text: "Draft your notice in English, preview the Spanish translation, and choose text, voice, or both. Review the audience before you send.",
+    text: "Draft your notice in English and choose text, voice, or both. Growth and Portfolio include live Spanish translation preview. Review the audience before you send.",
   },
   {
     icon: MessageSquare,
@@ -83,14 +82,19 @@ const workflowSteps = [
 
 const faqItems = [
   {
+    question: "Why do demo and setup links open MercuryReach?",
+    answer:
+      "TenantReach's demo and account setup currently run in our existing MercuryReach application. You will see MercuryReach branding there. You can try the simulated demo without creating an account; live resident delivery stays off until your team completes setup.",
+  },
+  {
     question: "What kinds of notices can I send?",
     answer:
       "Use text, voice, or both for maintenance updates, inspections, rent reminders, urgent property notices, and everyday community news.",
   },
   {
-    question: "Do teams have to write the Spanish notice separately?",
+    question: "Which plans include Spanish translation preview?",
     answer:
-      "No. Start with the English notice and generate a Spanish version automatically. Review the translation and preview the voice before sending.",
+      "Growth and Portfolio include live Spanish translation preview. English and Spanish delivery is included from Starter. You can try translation in the account-free demo before choosing a plan.",
   },
   {
     question: "Can this stay simple for non-technical staff?",
@@ -100,7 +104,7 @@ const faqItems = [
   {
     question: "Will live texting or calling turn on immediately?",
     answer:
-      "No. Setup and rehearsal stay separate from live launch. Your team can review the workflow before provider delivery is enabled. The public demo is simulated and does not contact residents.",
+      "No. Setup and rehearsal stay separate from live launch. Your team can review the workflow before real texts or calls are enabled. The public demo is simulated and does not contact residents.",
   },
   {
     question: "Can I manage more than one property?",
@@ -109,9 +113,18 @@ const faqItems = [
   },
 ];
 
+const featureComparison = [
+  { label: "Live Spanish translation preview", availability: [false, true, true] },
+  { label: "Shared team inbox", availability: [false, true, true] },
+  { label: "Your workspace branding", availability: [false, true, true] },
+  { label: "Priority setup support", availability: [false, false, true] },
+  { label: "Data exports and API access", availability: [false, false, true] },
+  { label: "Detailed reporting", availability: [false, false, true] },
+] as const;
+
 function TenantReachLogo() {
   const { props: darkLogo } = getImageProps({
-    src: "/brand/tenantreach/wordmark-dark.png",
+    src: "/brand/tenantreach/wordmark-dark.webp",
     alt: "TenantReach",
     width: 2172,
     height: 724,
@@ -127,7 +140,7 @@ function TenantReachLogo() {
       />
       {/* The complete supplied artwork is preserved in both color schemes. */}
       <Image
-        src="/brand/tenantreach/wordmark-light.png"
+        src="/brand/tenantreach/wordmark-light.webp"
         alt="TenantReach"
         width={2172}
         height={724}
@@ -194,7 +207,6 @@ export default function MarketingHomePage() {
                 {label}
               </a>
             ))}
-            <a href={`${appOrigin}/knowledge-base`}>Help Center</a>
           </nav>
         </details>
       </header>
@@ -218,13 +230,14 @@ export default function MarketingHomePage() {
             <a className={styles.button} href={`${appOrigin}/signup`}>
               Start beta setup <ArrowRight aria-hidden="true" size={17} />
             </a>
-            <a className={styles.secondaryButton} href="#demo">
-              Try the interactive demo{" "}
-              <ArrowDown aria-hidden="true" size={16} />
+            <a className={styles.secondaryButton} href={`${appOrigin}/#demo`}>
+              Try the demo{" "}
+              <ArrowUpRight aria-hidden="true" size={16} />
             </a>
           </div>
           <p className={styles.heroNote}>
-            Explore the workflow before enabling live delivery.
+            Demo and setup open in MercuryReach, our existing application.
+            <br />Try the demo without an account. No resident is contacted.
           </p>
         </section>
 
@@ -248,10 +261,18 @@ export default function MarketingHomePage() {
               />
             </div>
             <figcaption>
+              <div className={styles.mobilePreviewDetail} aria-label="Workspace reply detail" role="group">
+                <h3>A reply with its context.</h3>
+                <p><strong>Jamie Ellis</strong> · Lakeside Park, Unit 204</p>
+                <p className={styles.previewReply}>“Water under the kitchen sink”</p>
+                <p>Waiting for your reply</p>
+              </div>
+              <span>
               Illustrative workspace preview with sample people and properties.{" "}
-              <a href="#demo">
-                Try the notice workflow{" "}
-                <ArrowRight aria-hidden="true" size={14} />
+              </span>
+              <a href="/brand/tenantreach/workspace-preview.png" target="_blank" rel="noopener noreferrer">
+                View full-size workspace preview <span className={styles.srOnly}>(opens in a new tab)</span>{" "}
+                <ArrowUpRight aria-hidden="true" size={14} />
               </a>
             </figcaption>
           </figure>
@@ -314,8 +335,8 @@ export default function MarketingHomePage() {
                 Give it a dry run.
               </h2>
               <p>
-                Write an update, preview it in Spanish, and hear how it sounds.
-                Then walk through a simulated send.
+                Start with a familiar maintenance update. In the demo, write
+                your own notice, preview the Spanish translation, and hear it read aloud.
               </p>
               <ul className={styles.checkList}>
                 <li>
@@ -334,13 +355,31 @@ export default function MarketingHomePage() {
               <div className={styles.demoNote}>
                 <ShieldCheck aria-hidden="true" size={20} />
                 <p>
-                  This is a simulation. No resident is contacted, and no account
-                  is needed to try it.
+                  The demo opens in MercuryReach, our existing application.
+                  It is a simulation: no resident is contacted and no account is needed.
                 </p>
               </div>
+              <a className={styles.button} href={`${appOrigin}/#demo`}>
+                Try the demo <ArrowUpRight aria-hidden="true" size={17} />
+              </a>
             </div>
-            <div className={styles.demoComposer}>
-              <div className={styles.staticDemo}><h3>Try a notice, from draft to delivery.</h3><p>Open the interactive demo to explore a sample audience, translation, and voice preview. No resident is contacted.</p><a className={styles.button} href={`${appOrigin}/#demo`}>Open interactive demo <ArrowRight aria-hidden="true" size={17} /></a></div>
+            <div className={styles.sampleNotice} aria-label="Sample bilingual notice">
+              <div className={styles.sampleHeading}>
+                <h3>One notice.<br /><span>Two languages.</span></h3>
+                <Languages aria-hidden="true" size={28} strokeWidth={1.3} />
+              </div>
+              <div className={styles.noticeFlow}>
+                <span className={styles.noticeConnection} aria-hidden="true" />
+                <article>
+                  <h4>English notice</h4>
+                  <p>Water will be off at Maple Gardens on Friday from 10 AM to 2 PM for a line repair. Thank you for your patience.</p>
+                </article>
+                <article lang="es">
+                  <h4>Aviso en español</h4>
+                  <p>Se cortará el agua en Maple Gardens el viernes de 10 a. m. a 2 p. m. para reparar una tubería. Gracias por su paciencia.</p>
+                </article>
+              </div>
+              <p className={styles.sampleCaption}>Illustrative message · sample property · nothing sent</p>
             </div>
           </div>
         </section>
@@ -352,13 +391,13 @@ export default function MarketingHomePage() {
         >
           <div>
             <h2 id="support-title">
-              The details matter.
+              Every preference.
               <br />
-              We keep them close.
+              Every reply. In view.
             </h2>
             <p>
-              Good communication starts with knowing who you’re reaching—and
-              what happens next.
+              Keep contact preferences, delivery history, and follow-up
+              close to the people and properties they belong to.
             </p>
             <a className={styles.textLink} href={`${appOrigin}/knowledge-base`}>
               Explore the Help Center{" "}
@@ -398,10 +437,48 @@ export default function MarketingHomePage() {
           <div className={styles.sectionHeading}>
             <h2 id="pricing-title">A plan for every portfolio.</h2>
             <p>
-              Start with the size of your operation. Adjust as your communities
-              and communication needs grow.
+              Match your properties, resident list, and monthly text and voice
+              usage. Compare every allowance before you choose.
             </p>
           </div>
+          <div className={styles.usageHelp}>
+            <p><strong>What is an SMS segment?</strong> A text is billed in parts called segments. Long messages and some characters can use more than one segment per recipient. Calls use voice minutes.</p>
+            <p>All three plans include English and Spanish delivery. Growth and Portfolio add live translation preview.</p>
+            <p>Prices are in USD. These are monthly allowances; usage beyond them has the rates below. Review your selected plan during setup.</p>
+          </div>
+          <details className={styles.planComparison}>
+            <summary>Compare every allowance <ChevronDown aria-hidden="true" size={18} /></summary>
+            <div className={styles.comparisonScroll} role="region" aria-label="Monthly plan comparison" tabIndex={0}>
+              <table>
+                <caption>Monthly plan allowances and additional usage rates</caption>
+                <thead><tr><th scope="col">Plan details</th>{featuredPlans.map(plan => <th scope="col" key={plan}>{planCatalog[plan].displayName}</th>)}</tr></thead>
+                <tbody>
+                  <tr><th scope="row">Monthly price (USD)</th>{featuredPlans.map(plan => <td key={plan}>{formatCurrencyFromCents(planCatalog[plan].monthlyPriceCents)}</td>)}</tr>
+                  <tr><th scope="row">Properties</th>{featuredPlans.map(plan => <td key={plan}>{planCatalog[plan].propertyLimit}</td>)}</tr>
+                  <tr><th scope="row">Contacts</th>{featuredPlans.map(plan => <td key={plan}>{planCatalog[plan].contactLimit.toLocaleString("en-US")}</td>)}</tr>
+                  <tr><th scope="row">Team members</th>{featuredPlans.map(plan => <td key={plan}>{planCatalog[plan].teamMemberLimit}</td>)}</tr>
+                  <tr><th scope="row">SMS segments</th>{featuredPlans.map(plan => <td key={plan}>{planCatalog[plan].smsSegmentLimit.toLocaleString("en-US")}</td>)}</tr>
+                  <tr><th scope="row">Voice minutes</th>{featuredPlans.map(plan => <td key={plan}>{planCatalog[plan].voiceMinuteLimit.toLocaleString("en-US")}</td>)}</tr>
+                  <tr><th scope="row">Per extra SMS segment</th>{featuredPlans.map(plan => <td key={plan}>${(planCatalog[plan].overageSmsSegmentPriceCents / 100).toFixed(2)}</td>)}</tr>
+                  <tr><th scope="row">Per extra voice minute</th>{featuredPlans.map(plan => <td key={plan}>${(planCatalog[plan].overageVoiceMinutePriceCents / 100).toFixed(2)}</td>)}</tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+          <details className={styles.planComparison}>
+            <summary>Compare included features <ChevronDown aria-hidden="true" size={18} /></summary>
+            <p className={styles.featureHelp}>Every plan includes resident texts, voice calls, a two-way inbox, and English and Spanish delivery.</p>
+            <div className={styles.comparisonScroll} role="region" aria-label="Plan feature comparison" tabIndex={0}>
+              <table>
+                <caption>Features included in each plan</caption>
+                <thead><tr><th scope="col">Feature</th>{featuredPlans.map(plan => <th scope="col" key={plan}>{planCatalog[plan].displayName}<span className={styles.comparisonPrice}>{formatCurrencyFromCents(planCatalog[plan].monthlyPriceCents)} / mo</span></th>)}</tr></thead>
+                <tbody>
+                  {featureComparison.map(feature => <tr key={feature.label}><th scope="row">{feature.label}</th>{feature.availability.map((included, index) => <td key={featuredPlans[index]}>{included ? "Included" : "Not included"}</td>)}</tr>)}
+                </tbody>
+              </table>
+            </div>
+            <p className={styles.featureHelp}>Workspace branding lets your team use its own identity. Data exports provide downloadable records; API access connects data with your team’s software.</p>
+          </details>
           <div className={styles.plans}>
             {featuredPlans.map((plan) => {
               const definition = planCatalog[plan];
@@ -431,7 +508,9 @@ export default function MarketingHomePage() {
                     {definition.contactLimit.toLocaleString("en-US")} contacts
                     <br />
                     {definition.smsSegmentLimit.toLocaleString("en-US")} SMS
-                    segments
+                    segments / month
+                    <br />
+                    {definition.voiceMinuteLimit.toLocaleString("en-US")} voice minutes / month
                   </p>
                   <a
                     className={
@@ -443,7 +522,7 @@ export default function MarketingHomePage() {
                     <ArrowRight aria-hidden="true" size={16} />
                   </a>
                   <ul>
-                    {definition.features.slice(0, 3).map((feature) => (
+                    {definition.features.map((feature) => (
                       <li key={feature}>
                         <Check aria-hidden="true" size={16} />
                         {feature}
@@ -455,11 +534,12 @@ export default function MarketingHomePage() {
             })}
           </div>
           <p className={styles.pricingNote}>
-            Need a different fit?{" "}
-            <a href={`${appOrigin}/signup`}>
-              Compare all options <ArrowRight aria-hidden="true" size={14} />
+            Need more properties, contacts, or team members?{" "}
+            <a href={`${appOrigin}/signup?plan=enterprise`}>
+              Explore Enterprise setup <ArrowUpRight aria-hidden="true" size={14} />
             </a>
           </p>
+          <p className={styles.handoffNote}>Plan selection opens MercuryReach account setup. Live delivery is enabled separately.</p>
         </section>
 
         <section
@@ -494,13 +574,14 @@ export default function MarketingHomePage() {
         <section className={styles.closing} aria-labelledby="closing-title">
           <div className={styles.container}>
             <h2 id="closing-title">
-              A little more clarity.
-              <br />A lot more connection.
+              Make your next
+              <br />resident update clearer.
             </h2>
             <p>Give your team a calmer way to keep residents informed.</p>
             <a className={styles.button} href={`${appOrigin}/signup`}>
               Start beta setup <ArrowRight aria-hidden="true" size={17} />
             </a>
+            <p className={styles.handoffNote}>Continue in MercuryReach to set up your workspace. Rehearse before enabling live texts or calls.</p>
           </div>
         </section>
       </main>
@@ -532,7 +613,6 @@ export default function MarketingHomePage() {
           </div>
         </div>
       </footer>
-      <a className={styles.feedbackLink} href={`${appOrigin}/#demo`}>Try the demo</a>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 export const defaultBillingPlanCatalog = {
   STARTER: {
     displayName: "Starter",
-    description: "For smaller operators who mainly need urgent resident communication in one region.",
+    description: "For smaller property teams sending texts, making calls, and keeping up with resident replies.",
     monthlyPriceCents: 14900,
     annualPriceCents: 143000,
     annualDiscountLabel: "Save about 2 months",
@@ -21,7 +21,7 @@ export const defaultBillingPlanCatalog = {
   },
   GROWTH: {
     displayName: "Growth",
-    description: "For owner groups running multiple parks and wanting predictable monthly operations.",
+    description: "For teams managing several properties, sharing an inbox, and using their own workspace branding.",
     monthlyPriceCents: 34900,
     annualPriceCents: 335000,
     annualDiscountLabel: "Save about 2 months",
@@ -36,12 +36,12 @@ export const defaultBillingPlanCatalog = {
       "Everything in Starter",
       "Live translation preview",
       "Shared team inbox",
-      "White-label workspace",
+      "Your workspace branding",
     ],
   },
   PORTFOLIO: {
     displayName: "Portfolio",
-    description: "For regional portfolios that need stronger governance, larger usage pools, and admin support.",
+    description: "For larger portfolios that need more capacity, detailed reports, and connections to their own software.",
     monthlyPriceCents: 89900,
     annualPriceCents: 863000,
     annualDiscountLabel: "Save about 2 months",
@@ -54,9 +54,9 @@ export const defaultBillingPlanCatalog = {
     overageVoiceMinutePriceCents: 5,
     features: [
       "Everything in Growth",
-      "Priority onboarding",
-      "API and export access",
-      "Advanced reporting",
+      "Priority setup support",
+      "Data exports and API access",
+      "Detailed reporting",
     ],
   },
   ENTERPRISE: {
