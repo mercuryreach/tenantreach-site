@@ -340,7 +340,7 @@ export default function MarketingHomePage() {
               </div>
             </div>
             <div className={styles.demoComposer}>
-              <div className={styles.staticDemo}><h3>Try a notice, from draft to delivery.</h3><p>Open the interactive demo to explore a sample audience, translation, and voice preview. No resident is contacted.</p><a className={styles.button} href={`${appOrigin}/#demo`}>Open interactive demo <ArrowRight aria-hidden="true" size={17} /></a></div>
+              <div className={styles.staticDemo}><h3>Try a notice, from draft to delivery.</h3><p>Open the interactive demo to explore a sample audience, translation, and voice preview. No resident is contacted.</p><a className={styles.button} href={`${appOrigin}/demo#demo`}>Open interactive demo <ArrowRight aria-hidden="true" size={17} /></a></div>
             </div>
           </div>
         </section>
@@ -532,7 +532,7 @@ export default function MarketingHomePage() {
           </div>
         </div>
       </footer>
-      <a className={styles.feedbackLink} href={`${appOrigin}/#demo`}>Try the demo</a>
+      <a className={styles.feedbackLink} href={`${appOrigin}/demo#demo`}>Try the demo</a>
     </div>
   );
 }

@@ -13,7 +13,7 @@ const path = require('node:path');
   await expect(page.getByRole('heading', {level:1})).toHaveText('Every resident.One clear message.');
   await expect(page.getByRole('link', {name:'Log in',exact:true})).toHaveAttribute('href', 'https://mercuryreach.net/login');
   await expect(page.getByRole('link', {name:'Choose Growth'})).toHaveAttribute('href', 'https://mercuryreach.net/signup?plan=growth');
-  await expect(page.getByRole('link', {name:'Open interactive demo'})).toHaveAttribute('href', 'https://mercuryreach.net/#demo');
+  await expect(page.getByRole('link', {name:'Open interactive demo'})).toHaveAttribute('href', 'https://mercuryreach.net/demo#demo');
   const question = page.getByText('What kinds of notices can I send?', {exact:true});
   await question.click();
   await expect(page.getByText('Use text, voice, or both for maintenance updates, inspections, rent reminders, urgent property notices, and everyday community news.', {exact:true})).toBeVisible();
