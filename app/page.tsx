@@ -115,7 +115,6 @@ const faqItems = [
 
 const featureComparison = [
   { label: "Live Spanish translation preview", availability: [false, true, true] },
-  { label: "Shared team inbox", availability: [false, true, true] },
   { label: "Your workspace branding", availability: [false, true, true] },
   { label: "Priority setup support", availability: [false, false, true] },
   { label: "Data exports and API access", availability: [false, false, true] },
@@ -262,7 +261,7 @@ export default function MarketingHomePage() {
             </div>
             <figcaption>
               <div className={styles.mobilePreviewDetail} aria-label="Workspace reply detail" role="group">
-                <h3>A reply with its context.</h3>
+                <h2>A reply with its context.</h2>
                 <p><strong>Jamie Ellis</strong> · Lakeside Park, Unit 204</p>
                 <p className={styles.previewReply}>“Water under the kitchen sink”</p>
                 <p>Waiting for your reply</p>
@@ -441,10 +440,17 @@ export default function MarketingHomePage() {
               usage. Compare every allowance before you choose.
             </p>
           </div>
+          <dl className={styles.priceOverview} aria-label="Monthly plan prices">
+            {featuredPlans.map(plan => <div key={plan}>
+              <dt>{planCatalog[plan].displayName}</dt>
+              <dd>{formatCurrencyFromCents(planCatalog[plan].monthlyPriceCents)} <span>/ mo</span></dd>
+            </div>)}
+          </dl>
           <div className={styles.usageHelp}>
             <p><strong>What is an SMS segment?</strong> A text is billed in parts called segments. Long messages and some characters can use more than one segment per recipient. Calls use voice minutes.</p>
             <p>All three plans include English and Spanish delivery. Growth and Portfolio add live translation preview.</p>
             <p>Prices are in USD. These are monthly allowances; usage beyond them has the rates below. Review your selected plan during setup.</p>
+            <p><strong>Resident replies and team access.</strong> Shared Inbox is an optional add-on available on every plan, enabled separately from your subscription. Once enabled, teammates with inbox permissions can view and reply to resident messages; property managers see their assigned properties. Confirm add-on pricing during setup.</p>
           </div>
           <details className={styles.planComparison}>
             <summary>Compare every allowance <ChevronDown aria-hidden="true" size={18} /></summary>
@@ -467,7 +473,7 @@ export default function MarketingHomePage() {
           </details>
           <details className={styles.planComparison}>
             <summary>Compare included features <ChevronDown aria-hidden="true" size={18} /></summary>
-            <p className={styles.featureHelp}>Every plan includes resident texts, voice calls, a two-way inbox, and English and Spanish delivery.</p>
+            <p className={styles.featureHelp}>Every plan includes resident texts, voice calls, and English and Spanish delivery. Shared Inbox is enabled separately, as described above.</p>
             <div className={styles.comparisonScroll} role="region" aria-label="Plan feature comparison" tabIndex={0}>
               <table>
                 <caption>Features included in each plan</caption>

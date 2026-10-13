@@ -1,7 +1,7 @@
 export const defaultBillingPlanCatalog = {
   STARTER: {
     displayName: "Starter",
-    description: "For smaller property teams sending texts, making calls, and keeping up with resident replies.",
+    description: "For smaller property teams sending routine texts and voice notices.",
     monthlyPriceCents: 14900,
     annualPriceCents: 143000,
     annualDiscountLabel: "Save about 2 months",
@@ -15,13 +15,12 @@ export const defaultBillingPlanCatalog = {
     features: [
       "Mass SMS notices",
       "Basic voice broadcasting",
-      "Two-way inbox",
       "English and Spanish delivery",
     ],
   },
   GROWTH: {
     displayName: "Growth",
-    description: "For teams managing several properties, sharing an inbox, and using their own workspace branding.",
+    description: "For teams managing several properties, previewing translations, and using their own workspace branding.",
     monthlyPriceCents: 34900,
     annualPriceCents: 335000,
     annualDiscountLabel: "Save about 2 months",
@@ -33,9 +32,9 @@ export const defaultBillingPlanCatalog = {
     overageSmsSegmentPriceCents: 3,
     overageVoiceMinutePriceCents: 7,
     features: [
-      "Everything in Starter",
-      "Live translation preview",
-      "Shared team inbox",
+      "Resident texts and voice calls",
+      "English and Spanish delivery",
+      "Live Spanish translation preview",
       "Your workspace branding",
     ],
   },
@@ -53,7 +52,10 @@ export const defaultBillingPlanCatalog = {
     overageSmsSegmentPriceCents: 2,
     overageVoiceMinutePriceCents: 5,
     features: [
-      "Everything in Growth",
+      "Resident texts and voice calls",
+      "English and Spanish delivery",
+      "Live Spanish translation preview",
+      "Your workspace branding",
       "Priority setup support",
       "Data exports and API access",
       "Detailed reporting",

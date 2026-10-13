@@ -90,6 +90,7 @@ async function assertThemeChangesWithoutReload(page) {
   });
 
   const logo = page.getByRole("img", { name: "TenantReach" }).first();
+  await logo.scrollIntoViewIfNeeded();
   for (const scheme of ["light", "dark", "light"]) {
     await page.emulateMedia({ colorScheme: scheme });
     await page.waitForFunction(
@@ -97,8 +98,9 @@ async function assertThemeChangesWithoutReload(page) {
       scheme,
     );
     await expect(logo).toBeVisible();
-    const logoUrl = await logo.evaluate((image) => image.currentSrc);
-    expect(logoUrl, `TenantReach logo did not update for ${scheme} mode.`).toMatch(
+    await expect.poll(() => logo.evaluate((image) => image.currentSrc), {
+      message: `TenantReach logo did not update for ${scheme} mode.`,
+    }).toMatch(
       scheme === "dark" ? /wordmark-dark/i : /wordmark-light/i,
     );
   }
@@ -140,6 +142,48 @@ async function assertKeyboardDisclosureBehavior(page, isMobile) {
   }
 }
 
+async function assertSectionNavigation(page, isMobile) {
+  const navigation = isMobile
+    ? page.getByRole("navigation", { name: "Mobile section navigation" })
+    : page.getByRole("navigation", { name: "Public navigation" });
+  const sections = [
+    ["#demo", "Demo"],
+    ["#workflow", "How it works"],
+    ["#pricing", "Plans"],
+    ["#faq", "Questions"],
+  ];
+  let previousLink;
+
+  if (isMobile) {
+    const menu = page.locator("summary").filter({ hasText: "Explore TenantReach" });
+    const menuDetails = menu.locator("..");
+    await expect(menuDetails).toHaveJSProperty("open", false);
+    await menu.click();
+    await expect(menuDetails).toHaveJSProperty("open", true);
+  }
+
+  await expect(navigation).toBeVisible();
+  for (const [href, label] of sections) {
+    const link = navigation.getByRole("link", { name: label, exact: true });
+    await link.click();
+    await expect(page).toHaveURL(new RegExp(`${href.replace("#", "\\#")}$`));
+    await page.mouse.move(0, 0);
+    expect(await link.evaluate((node) => node.matches(":hover")), `The pointer must be away from ${label}.`).toBe(false);
+    await expect(link).toHaveCSS("text-decoration-line", "underline");
+    if (previousLink) {
+      await expect(previousLink).toHaveCSS("text-decoration-line", "none");
+    }
+    previousLink = link;
+  }
+
+  if (isMobile) {
+    const menu = page.locator("summary").filter({ hasText: "Explore TenantReach" });
+    const menuDetails = menu.locator("..");
+    await menu.click();
+    await expect(menuDetails).toHaveJSProperty("open", false);
+  }
+}
+
 async function assertReleaseCopyAndLinks(page) {
   await expect(page.getByRole("link", { name: /try the demo/i }).first()).toHaveAttribute(
     "href",
@@ -162,16 +206,32 @@ async function assertReleaseCopyAndLinks(page) {
 
 async function assertPlanAllowanceDisclosure(page) {
   const pricing = page.locator("#pricing");
-  await expect(pricing).toContainText(/voice minutes/i);
   const usageExplanation = pricing.getByText("What is an SMS segment?", { exact: false }).first();
+  const priceOverview = pricing.getByLabel("Monthly plan prices", { exact: true });
+  const sharedInboxDisclosure = pricing.getByText(
+    "Shared Inbox is an optional add-on available on every plan, enabled separately from your subscription.",
+    { exact: false },
+  );
   const allowanceSummary = pricing.locator("summary").filter({ hasText: "Compare every allowance" });
   const allowanceDetails = allowanceSummary.locator("..");
   const firstChooseLink = pricing.getByRole("link", { name: /^Choose / }).first();
   await expect(usageExplanation).toBeVisible();
+  await expect(priceOverview).toBeVisible();
+  await expect(priceOverview).toContainText("Starter");
+  await expect(priceOverview).toContainText("$149");
+  await expect(priceOverview).toContainText("Growth");
+  await expect(priceOverview).toContainText("$349");
+  await expect(priceOverview).toContainText("Portfolio");
+  await expect(priceOverview).toContainText("$899");
+  await expect(sharedInboxDisclosure).toBeVisible();
+  await expect(sharedInboxDisclosure).toContainText(/teammates with inbox permissions can view and reply/i);
+  await expect(sharedInboxDisclosure).toContainText(/property managers see their assigned properties/i);
   await expect(allowanceSummary).toBeVisible();
   await expect(firstChooseLink).toBeVisible();
+  await assertPrecedes(priceOverview, usageExplanation, "The monthly price overview must precede the SMS explanation.");
   await assertPrecedes(usageExplanation, firstChooseLink, "The usage explanation must precede the plan choices.");
   await assertPrecedes(allowanceDetails, firstChooseLink, "The allowance comparison must precede the plan choices.");
+  await assertPrecedes(sharedInboxDisclosure, firstChooseLink, "The Shared Inbox disclosure must precede the plan choices.");
   await expect(allowanceDetails).toHaveJSProperty("open", false);
   await allowanceSummary.focus();
   await page.keyboard.press("Enter");
@@ -212,7 +272,6 @@ async function assertPlanAllowanceDisclosure(page) {
   const translationRow = featureTable.getByRole("row", { name: /Spanish translation preview/ });
   await expect(translationRow).toContainText("Not included");
   await expect(translationRow).toContainText("Included");
-  await expect(pricing).toContainText(/(Every|All|Each) plan[\s\S]{0,160}include/i);
 }
 
 async function assertPrecedes(first, second, message) {
@@ -360,6 +419,7 @@ async function checkVariant(browser, variant) {
     await assertLocalGeist(page);
     expect(fontRequests.every((url) => new URL(url).origin === new URL(siteUrl).origin)).toBe(true);
     await assertNoVisualOverflowOrBrokenAssets(page);
+    await assertSectionNavigation(page, Boolean(variant.isMobile));
 
     if (variant.name === "desktop-light") {
       await assertThemeChangesWithoutReload(page);
