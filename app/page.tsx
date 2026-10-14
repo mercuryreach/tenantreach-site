@@ -29,7 +29,7 @@ const geist = localFont({
 
 const title = "TenantReach | Every resident. One clear message.";
 const description =
-  "One place for property teams to send resident texts and calls, translate notices, and keep up with replies.";
+  "Message tenants with ReachAssist AI, automatically categorize messages, and keep texts, calls, and replies together in TenantReach.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tenantreach.net"),
@@ -58,6 +58,7 @@ export const viewport: Viewport = {
 const navigation = [
   ["#demo", "Demo"],
   ["#workflow", "How it works"],
+  ["#reachassist", "ReachAssist"],
   ["#pricing", "Plans"],
   ["#faq", "Questions"],
 ] as const;
@@ -81,6 +82,16 @@ const workflowSteps = [
 ];
 
 const faqItems = [
+  {
+    question: "Can I talk to ReachAssist to message tenants?",
+    answer:
+      "Yes. Tell ReachAssist who you want to reach and what you want to say. ReachAssist AI helps prepare your message, so you can review the audience and wording before sending.",
+  },
+  {
+    question: "How does Automatic Message Categorization help?",
+    answer:
+      "When Automatic Message Categorization is enabled for your workspace, incoming messages are organized by category, helping your team find conversations that need attention and keep track of follow-up.",
+  },
   {
     question: "Why do demo and setup links open MercuryReach?",
     answer:
@@ -291,6 +302,12 @@ export default function MarketingHomePage() {
             <span>
               <ShieldCheck aria-hidden="true" size={18} /> Contact preferences
             </span>
+            <span>
+              <MessageSquare aria-hidden="true" size={18} /> Automatic Message Categorization
+            </span>
+            <span>
+              <MessageSquare aria-hidden="true" size={18} /> ReachAssist AI
+            </span>
           </div>
         </section>
 
@@ -318,6 +335,63 @@ export default function MarketingHomePage() {
                 <p>{step.text}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section
+          className={`${styles.container} ${styles.section}`}
+          id="reachassist"
+          aria-labelledby="reachassist-title"
+        >
+          <div className={styles.sectionHeading}>
+            <h2 id="reachassist-title">Talk to ReachAssist.<br />Message your tenants.</h2>
+            <p>
+              Tell ReachAssist AI who you want to reach and what you want to say.
+              Prepare a notice in conversation, then review your audience and
+              message before sending.
+            </p>
+          </div>
+          <figure className={`${styles.preview} ${styles.assistScreenshot}`}>
+            <Image
+              src="/media/reachassist-workspace.png"
+              alt="ReachAssist preparing a tenant notice inside the application, with a conversation and a draft ready for review in a sample workspace."
+              width={1440}
+              height={900}
+              sizes="(max-width: 760px) 100vw, 1120px"
+            />
+            <figcaption>
+              ReachAssist application preview · synthetic demo workspace.
+              <a href="/media/reachassist-workspace.png" target="_blank" rel="noopener noreferrer">View full-size ReachAssist screenshot <ArrowUpRight aria-hidden="true" size={14} /></a>
+            </figcaption>
+          </figure>
+          <div className={styles.walkthrough}>
+            <h3 id="walkthrough-title">See the workflow, from audience to review.</h3>
+            <p>
+              A short walkthrough of the application, Automatic Message
+              Categorization, and ReachAssist. Sample data only; no tenant is contacted.
+            </p>
+            <video
+              className={styles.walkthroughVideo}
+              controls
+              playsInline
+              preload="none"
+              poster="/media/walkthrough-poster.jpg"
+              aria-labelledby="walkthrough-title"
+            >
+              <source src="/media/tenantreach-reachassist-walkthrough.mp4" type="video/mp4" />
+              <track kind="captions" src="/media/walkthrough-captions.vtt" srcLang="en" label="English" default />
+              Your browser does not support embedded video. <a href="/media/tenantreach-reachassist-walkthrough.mp4">Download the walkthrough</a>.
+            </video>
+            <details className={styles.walkthroughTranscript}>
+              <summary>Read the walkthrough transcript <ChevronDown aria-hidden="true" size={17} /></summary>
+              <ol>
+                <li>Open your workspace and choose the tenants you want to reach.</li>
+                <li>Draft a notice and review your message.</li>
+                <li>Automatic Message Categorization helps organize incoming messages for follow-up.</li>
+                <li>Talk to ReachAssist to prepare a tenant message. Review the draft before sending.</li>
+                <li>Explore TenantReach.net. This walkthrough uses a demo workspace and sample data.</li>
+              </ol>
+            </details>
           </div>
         </section>
 
@@ -404,6 +478,14 @@ export default function MarketingHomePage() {
             </a>
           </div>
           <div className={styles.supportRows}>
+            <article>
+              <h3>Automatic Message Categorization</h3>
+              <p>
+                With Automatic Message Categorization enabled, incoming messages are organized by category,
+                so your team can find conversations that need attention and
+                keep follow-up moving.
+              </p>
+            </article>
             <article>
               <h3>Respect every preference.</h3>
               <p>

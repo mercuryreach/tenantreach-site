@@ -149,6 +149,7 @@ async function assertSectionNavigation(page, isMobile) {
   const sections = [
     ["#demo", "Demo"],
     ["#workflow", "How it works"],
+    ["#reachassist", "ReachAssist"],
     ["#pricing", "Plans"],
     ["#faq", "Questions"],
   ];
@@ -185,6 +186,26 @@ async function assertSectionNavigation(page, isMobile) {
 }
 
 async function assertReleaseCopyAndLinks(page) {
+  const assist = page.getByRole("region", { name: "Talk to ReachAssist. Message your tenants." });
+  await expect(assist).toBeVisible();
+  await expect(assist.getByRole("img", { name: /ReachAssist preparing a tenant notice/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Automatic Message Categorization", exact: true })).toBeVisible();
+  const video = assist.locator("video");
+  await expect(video).toHaveAttribute("controls", "");
+  await expect(video).not.toHaveAttribute("autoplay", "");
+  await video.evaluate((node) => node.load());
+  await expect.poll(() => video.evaluate((node) => node.readyState)).toBeGreaterThanOrEqual(2);
+  expect(await video.evaluate((node) => node.duration)).toBeCloseTo(40, 0);
+  await video.evaluate((node) => node.play());
+  await expect.poll(() => video.evaluate((node) => node.currentTime)).toBeGreaterThan(0);
+  await video.evaluate((node) => node.pause());
+  const transcript = assist.locator("summary").filter({ hasText: "Read the walkthrough transcript" });
+  await transcript.focus();
+  await page.keyboard.press("Enter");
+  await expect(transcript.locator("..")).toHaveJSProperty("open", true);
+  await expect(transcript.locator("..").getByRole("list")).toContainText("Review the draft before sending");
+  await page.keyboard.press("Enter");
+  await expect(transcript.locator("..")).toHaveJSProperty("open", false);
   await expect(page.getByRole("link", { name: /try the demo/i }).first()).toHaveAttribute(
     "href",
     "https://mercuryreach.net/#demo",
@@ -393,6 +414,7 @@ async function checkVariant(browser, variant) {
   const consoleErrors = [];
   const failedResponses = [];
   const failedRequests = [];
+  const expectedMediaCancellations = [];
   const fontRequests = [];
 
   page.on("pageerror", (error) => pageErrors.push(error.message));
@@ -407,7 +429,17 @@ async function checkVariant(browser, variant) {
   page.on("response", (response) => {
     if (response.status() >= 400) failedResponses.push(`${response.status()} ${response.url()}`);
   });
-  page.on("requestfailed", (request) => failedRequests.push(`${request.failure()?.errorText || "failed"} ${request.url()}`));
+  page.on("requestfailed", (request) => {
+    const failure = request.failure()?.errorText || "failed";
+    // Chromium can cancel an MP4 byte-range request after loading or pausing.
+    // Playback and duration are asserted separately; HTTP and other failures still fail.
+    if (failure === "net::ERR_ABORTED" && request.resourceType() === "media"
+      && new URL(request.url()).pathname === "/media/tenantreach-reachassist-walkthrough.mp4") {
+      expectedMediaCancellations.push(request.url());
+      return;
+    }
+    failedRequests.push(`${failure} ${request.url()}`);
+  });
   page.on("request", (request) => {
     if (request.resourceType() === "font") fontRequests.push(request.url());
   });
@@ -452,7 +484,7 @@ async function checkVariant(browser, variant) {
     expect(consoleErrors, messageList("Console errors", consoleErrors)).toEqual([]);
     expect(failedResponses, messageList("Failed responses", failedResponses)).toEqual([]);
     expect(failedRequests, messageList("Failed requests", failedRequests)).toEqual([]);
-    return { variant: variant.name, violations };
+    return { variant: variant.name, violations, mediaRangeCancellations: expectedMediaCancellations.length };
   } finally {
     await page.close();
   }

@@ -137,6 +137,7 @@
 }
 .page:has(:global(#demo):target) nav a[href="#demo"],
 .page:has(:global(#workflow):target) nav a[href="#workflow"],
+.page:has(:global(#reachassist):target) nav a[href="#reachassist"],
 .page:has(:global(#pricing):target) nav a[href="#pricing"],
 .page:has(:global(#faq):target) nav a[href="#faq"] {
   color: var(--ink);
@@ -319,6 +320,50 @@
   margin-top: 12px;
   color: var(--muted-ink);
   line-height: 1.8;
+}
+.assistScreenshot {
+  margin-top: 40px;
+}
+.assistScreenshot > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.walkthrough {
+  margin-top: 48px;
+}
+.walkthrough > p {
+  max-width: 68ch;
+  margin-block: 12px 24px;
+  color: var(--muted-ink);
+}
+.walkthroughVideo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--rule);
+  border-radius: 9px;
+  background: var(--quiet);
+}
+.walkthroughTranscript {
+  margin-top: 20px;
+  border-block: 1px solid var(--rule);
+}
+.walkthroughTranscript summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  cursor: pointer;
+}
+.walkthroughTranscript ol {
+  padding-left: 24px;
+  max-width: 68ch;
+  color: var(--muted-ink);
+}
+.walkthroughTranscript li {
+  margin-block: 10px;
 }
 .demoSection {
   background: var(--quiet);
