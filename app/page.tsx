@@ -253,39 +253,45 @@ export default function MarketingHomePage() {
 
         <section
           className={styles.container}
-          aria-label="Workspace design preview"
+          id="walkthrough"
+          aria-label="Application walkthrough"
         >
           <figure className={styles.preview}>
             <div className={styles.previewBar}>
-              <span>Room for the work that matters.</span>
-              <span>Workspace preview</span>
+              <span id="walkthrough-title">See TenantReach and ReachAssist in action.</span>
+              <span>40-second walkthrough</span>
             </div>
-            <div className={styles.previewImage}>
-              <Image
-                src="/brand/tenantreach/workspace-preview.png"
-                alt="TenantReach workspace concept showing resident replies, property context, and messages organized by category."
-                width={1378}
-                height={1090}
-                sizes="(max-width: 760px) 100vw, 1120px"
-                preload
-              />
-            </div>
+            <video
+              className={`${styles.walkthroughVideo} ${styles.previewVideo}`}
+              controls
+              playsInline
+              preload="none"
+              poster="/media/walkthrough-poster.jpg"
+              aria-labelledby="walkthrough-title"
+            >
+              <source src="/media/tenantreach-reachassist-walkthrough.mp4" type="video/mp4" />
+              <track kind="captions" src="/media/walkthrough-captions.vtt" srcLang="en" label="English" default />
+              Your browser does not support embedded video. <a href="/media/tenantreach-reachassist-walkthrough.mp4">Download the walkthrough</a>.
+            </video>
             <figcaption>
-              <div className={styles.mobilePreviewDetail} aria-label="Workspace reply detail" role="group">
-                <h2>A reply with its context.</h2>
-                <p><strong>Jamie Ellis</strong> · Lakeside Park, Unit 204</p>
-                <p className={styles.previewReply}>“Water under the kitchen sink”</p>
-                <p>Waiting for your reply</p>
-              </div>
               <span>
-              Illustrative workspace preview with sample people and properties.{" "}
+                Application walkthrough with sample data. No tenant is contacted.
               </span>
-              <a href="/brand/tenantreach/workspace-preview.png" target="_blank" rel="noopener noreferrer">
-                View full-size workspace preview <span className={styles.srOnly}>(opens in a new tab)</span>{" "}
-                <ArrowUpRight aria-hidden="true" size={14} />
+              <a href="/media/tenantreach-reachassist-walkthrough.mp4" download>
+                Download walkthrough <ArrowRight aria-hidden="true" size={14} />
               </a>
             </figcaption>
           </figure>
+          <details className={styles.walkthroughTranscript}>
+            <summary>Read the walkthrough transcript <ChevronDown aria-hidden="true" size={17} /></summary>
+            <ol>
+              <li>Open your workspace and choose the tenants you want to reach.</li>
+              <li>Draft a notice and review your message.</li>
+              <li>Automatic Message Categorization helps organize incoming messages for follow-up.</li>
+              <li>Talk to ReachAssist to prepare a tenant message. Review the draft before sending.</li>
+              <li>Explore TenantReach.net. This walkthrough uses a demo workspace and sample data.</li>
+            </ol>
+          </details>
           <div
             className={styles.capabilities}
             aria-label="Communication capabilities"
@@ -364,35 +370,9 @@ export default function MarketingHomePage() {
               <a href="/media/reachassist-workspace.png" target="_blank" rel="noopener noreferrer">View full-size ReachAssist screenshot <ArrowUpRight aria-hidden="true" size={14} /></a>
             </figcaption>
           </figure>
-          <div className={styles.walkthrough}>
-            <h3 id="walkthrough-title">See the workflow, from audience to review.</h3>
-            <p>
-              A short walkthrough of the application, Automatic Message
-              Categorization, and ReachAssist. Sample data only; no tenant is contacted.
-            </p>
-            <video
-              className={styles.walkthroughVideo}
-              controls
-              playsInline
-              preload="none"
-              poster="/media/walkthrough-poster.jpg"
-              aria-labelledby="walkthrough-title"
-            >
-              <source src="/media/tenantreach-reachassist-walkthrough.mp4" type="video/mp4" />
-              <track kind="captions" src="/media/walkthrough-captions.vtt" srcLang="en" label="English" default />
-              Your browser does not support embedded video. <a href="/media/tenantreach-reachassist-walkthrough.mp4">Download the walkthrough</a>.
-            </video>
-            <details className={styles.walkthroughTranscript}>
-              <summary>Read the walkthrough transcript <ChevronDown aria-hidden="true" size={17} /></summary>
-              <ol>
-                <li>Open your workspace and choose the tenants you want to reach.</li>
-                <li>Draft a notice and review your message.</li>
-                <li>Automatic Message Categorization helps organize incoming messages for follow-up.</li>
-                <li>Talk to ReachAssist to prepare a tenant message. Review the draft before sending.</li>
-                <li>Explore TenantReach.net. This walkthrough uses a demo workspace and sample data.</li>
-              </ol>
-            </details>
-          </div>
+          <p className={styles.walkthrough}>
+            <a className={styles.textLink} href="#walkthrough">Watch the 40-second walkthrough <ArrowRight aria-hidden="true" size={17} /></a>
+          </p>
         </section>
 
         <section

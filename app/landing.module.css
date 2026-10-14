@@ -345,6 +345,10 @@
   border-radius: 9px;
   background: var(--quiet);
 }
+.previewVideo {
+  border: 0;
+  border-radius: 0;
+}
 .walkthroughTranscript {
   margin-top: 20px;
   border-block: 1px solid var(--rule);

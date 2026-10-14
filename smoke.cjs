@@ -190,7 +190,12 @@ async function assertReleaseCopyAndLinks(page) {
   await expect(assist).toBeVisible();
   await expect(assist.getByRole("img", { name: /ReachAssist preparing a tenant notice/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Automatic Message Categorization", exact: true })).toBeVisible();
-  const video = assist.locator("video");
+  const walkthrough = page.getByRole("region", { name: "Application walkthrough" });
+  await expect(walkthrough).toBeVisible();
+  await assertPrecedes(walkthrough, page.locator("#workflow"), "The video must replace the lead workspace preview.");
+  await expect(page.locator("video")).toHaveCount(1);
+  await expect(page.locator('img[src="/brand/tenantreach/workspace-preview.png"]')).toHaveCount(0);
+  const video = walkthrough.locator("video");
   await expect(video).toHaveAttribute("controls", "");
   await expect(video).not.toHaveAttribute("autoplay", "");
   await video.evaluate((node) => node.load());
@@ -199,7 +204,7 @@ async function assertReleaseCopyAndLinks(page) {
   await video.evaluate((node) => node.play());
   await expect.poll(() => video.evaluate((node) => node.currentTime)).toBeGreaterThan(0);
   await video.evaluate((node) => node.pause());
-  const transcript = assist.locator("summary").filter({ hasText: "Read the walkthrough transcript" });
+  const transcript = walkthrough.locator("summary").filter({ hasText: "Read the walkthrough transcript" });
   await transcript.focus();
   await page.keyboard.press("Enter");
   await expect(transcript.locator("..")).toHaveJSProperty("open", true);
@@ -214,15 +219,9 @@ async function assertReleaseCopyAndLinks(page) {
   const copy = await visibleText(page);
   expect(copy).toMatch(/demo and setup[\s\S]{0,100}MercuryReach[\s\S]{0,100}existing application/i);
 
-  const preview = page.getByRole("link", { name: /full[- ]size(?: workspace)? preview/i });
-  await expect(preview).toHaveAttribute("href", "/brand/tenantreach/workspace-preview.png");
-  await expect(preview).toHaveAttribute("target", "_blank");
-  const popupPromise = page.waitForEvent("popup");
-  await preview.click();
-  const popup = await popupPromise;
-  await popup.waitForLoadState("domcontentloaded");
-  expect(new URL(popup.url()).pathname).toBe("/brand/tenantreach/workspace-preview.png");
-  await popup.close();
+  const download = walkthrough.getByRole("link", { name: "Download walkthrough", exact: true });
+  await expect(download).toHaveAttribute("href", "/media/tenantreach-reachassist-walkthrough.mp4");
+  await expect(download).toHaveAttribute("download", "");
 }
 
 async function assertPlanAllowanceDisclosure(page) {
@@ -316,12 +315,11 @@ async function captureNoticeScreenshots(page, colorScheme) {
   await page.locator("#demo").screenshot({ path: path.join(artifactDir, `demo-section-${colorScheme}.png`) });
 }
 
-async function assertMobilePreviewDetail(page) {
-  const detail = page.getByLabel("Workspace reply detail");
-  await expect(detail).toBeVisible();
-  for (const text of ["Jamie Ellis", "Lakeside Park", "Unit 204", /Water under (?:the )?kitchen sink/i, "Waiting for your reply"]) {
-    await expect(detail).toContainText(text);
-  }
+async function assertMobileWalkthrough(page) {
+  const walkthrough = page.getByRole("region", { name: "Application walkthrough" });
+  await expect(walkthrough.locator("video")).toBeVisible();
+  await expect(walkthrough).toContainText("40-second walkthrough");
+  await expect(walkthrough.getByRole("link", { name: "Download walkthrough", exact: true })).toBeVisible();
 }
 
 async function assertNoticeConnectorIsDecorative(page) {
@@ -464,7 +462,7 @@ async function checkVariant(browser, variant) {
     }
 
     if (variant.isMobile) {
-      await assertMobilePreviewDetail(page);
+      await assertMobileWalkthrough(page);
     }
 
     if (variant.isMobile && variant.colorScheme === "light") {
@@ -475,7 +473,7 @@ async function checkVariant(browser, variant) {
 
     const violations = await runAxe(page);
     if (variant.isMobile) {
-      await page.getByRole("region", { name: "Workspace design preview" }).screenshot({
+      await page.getByRole("region", { name: "Application walkthrough" }).screenshot({
         path: path.join(artifactDir, `${variant.name}-preview.png`),
       });
     }
