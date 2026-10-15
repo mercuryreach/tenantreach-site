@@ -285,11 +285,13 @@ export default function MarketingHomePage() {
           <details className={styles.walkthroughTranscript}>
             <summary>Read the walkthrough transcript <ChevronDown aria-hidden="true" size={17} /></summary>
             <ol>
-              <li>Open your workspace and choose the tenants you want to reach.</li>
-              <li>Draft a notice and review your message.</li>
-              <li>Automatic Message Categorization helps organize incoming messages for follow-up.</li>
-              <li>Talk to ReachAssist to prepare a tenant message. Review the draft before sending.</li>
-              <li>Explore TenantReach.net. This walkthrough uses a demo workspace and sample data.</li>
+              <li>Meet TenantReach. Tenant communication, in one workspace.</li>
+              <li>Choose the right people and property for every notice.</li>
+              <li>Draft your message, with your audience in view.</li>
+              <li>Keep incoming texts organized by topic with Automatic Message Categorization.</li>
+              <li>With ReachAssist, describe the notice you want to prepare.</li>
+              <li>Review the message and recipients. You confirm before anything is sent.</li>
+              <li>From intent to notice. You stay in control. TenantReach dot net.</li>
             </ol>
           </details>
           <div

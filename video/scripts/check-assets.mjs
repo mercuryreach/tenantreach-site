@@ -19,6 +19,10 @@ export function checkAssets() {
     return { name, width, height };
   });
   readFileSync(path.join(projectRoot, 'public', 'fonts', 'geist-latin-variable.woff2'));
+  const soundtrack = readFileSync(path.join(projectRoot, 'public', 'audio', 'walkthrough-soundtrack.wav'));
+  if (soundtrack.subarray(0, 4).toString() !== 'RIFF' || soundtrack.subarray(8, 12).toString() !== 'WAVE') {
+    throw new Error('The prepared narration and music soundtrack must be a WAV file.');
+  }
   return assets;
 }
 

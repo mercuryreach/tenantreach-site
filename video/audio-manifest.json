@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "durationSeconds": 40,
+  "narration": {
+    "provider": "ElevenLabs",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "voiceName": "Sarah",
+    "modelId": "eleven_multilingual_v2",
+    "sourceSha256": "05f899e1c485de5047e45c1852b992e0d169977a0c5a22d6450eafdc7d3e4cb9",
+    "sourceDurationSeconds": 29.396463,
+    "playbackRate": 1,
+    "alignment": "Seven scene cues aligned using the generated character timestamps.",
+    "paidPlan": "Confirmed by the owner in the original session."
+  },
+  "music": {
+    "provider": "Suno",
+    "title": "TenantReach - Clear Path",
+    "songUrl": "https://suno.com/song/8ae53b53-9d44-4332-ae5a-647d17ae038c",
+    "download": "Official unlocked MP3 download recovered from the original session.",
+    "sourceSha256": "0cffca25537569ab4ba66ee3f54dfe490dcdc9e359e6c1ff1df0ee18b89c3e44",
+    "sourceDurationSeconds": 37.64,
+    "preparation": "Pitch-preserving atempo=0.941, padded and trimmed to exactly 40 seconds; no looping.",
+    "preparedSha256": "9759518fcac9871071a8dd9a8a2b784b8070aa55918830e5d1f4bd6e836c52ac",
+    "paidPlan": "Owner confirmed upgrade before generation; original session recorded Pro and the unlocked download."
+  },
+  "mix": {
+    "master": "public/audio/walkthrough-soundtrack.wav",
+    "masterSha256": "7a1e489bb19e264de6b1611765500fe44d3eeccbbb9883cfa9317fc1cdf8f558",
+    "audit": "public/audio/walkthrough-soundtrack.wav.audit.json",
+    "sampleRate": 48000,
+    "channels": 2,
+    "speechTargetLUFS": -18,
+    "musicTargetLUFS": -27,
+    "ducking": { "threshold": 0.02, "ratio": 8, "attackMilliseconds": 20, "releaseMilliseconds": 350 },
+    "measuredMasterIntegratedLUFS": -16.01,
+    "measuredMasterTruePeakDBTP": -1.5
+  },
+  "publishedMedia": {
+    "path": "public/media/tenantreach-reachassist-walkthrough.mp4",
+    "sha256": "557b1682edd7cb2f0dc68eaf6add4421f873076089ac3e56b0f4920507edfdad",
+    "sizeBytes": 8760560,
+    "video": "Original approved 1920x1080, 30fps H.264, limited-range yuv420p stream copied without re-encoding.",
+    "videoStreamSha256BeforeAndAfter": "a39311295d65f97341ef11d0d37fce89e4e3b08127ae0e68993103aef672b864",
+    "audio": "AAC-LC, stereo, 48000 Hz, 192 kbps",
+    "measuredEncodedIntegratedLUFS": -16.03,
+    "measuredEncodedTruePeakDBTP": -1.49
+  }
+}

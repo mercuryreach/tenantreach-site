@@ -8,6 +8,7 @@ import { loadFont } from '@remotion/fonts';
 import {
   AbsoluteFill,
   Easing,
+  Html5Audio,
   Img,
   Sequence,
   interpolate,
@@ -136,6 +137,7 @@ export const Walkthrough = () => {
   const closing = frame >= 1020;
   return (
     <AbsoluteFill style={{ backgroundColor: paper, color: ink, fontFamily: 'Geist, sans-serif' }}>
+      <Html5Audio src={staticFile('audio/walkthrough-soundtrack.wav')} />
       {scenes.map((scene) => (
         <Sequence key={scene.capture} from={scene.from} durationInFrames={scene.frames}>
           <CaptureScene scene={scene} />

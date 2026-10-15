@@ -195,22 +195,9 @@ async function assertReleaseCopyAndLinks(page) {
   await assertPrecedes(walkthrough, page.locator("#workflow"), "The video must replace the lead workspace preview.");
   await expect(page.locator("video")).toHaveCount(1);
   await expect(page.locator('img[src="/brand/tenantreach/workspace-preview.png"]')).toHaveCount(0);
-  const video = walkthrough.locator("video");
-  await expect(video).toHaveAttribute("controls", "");
-  await expect(video).not.toHaveAttribute("autoplay", "");
-  await video.evaluate((node) => node.load());
-  await expect.poll(() => video.evaluate((node) => node.readyState)).toBeGreaterThanOrEqual(2);
-  expect(await video.evaluate((node) => node.duration)).toBeCloseTo(40, 0);
-  await video.evaluate((node) => node.play());
-  await expect.poll(() => video.evaluate((node) => node.currentTime)).toBeGreaterThan(0);
-  await video.evaluate((node) => node.pause());
-  const transcript = walkthrough.locator("summary").filter({ hasText: "Read the walkthrough transcript" });
-  await transcript.focus();
-  await page.keyboard.press("Enter");
-  await expect(transcript.locator("..")).toHaveJSProperty("open", true);
-  await expect(transcript.locator("..").getByRole("list")).toContainText("Review the draft before sending");
-  await page.keyboard.press("Enter");
-  await expect(transcript.locator("..")).toHaveJSProperty("open", false);
+  const download = walkthrough.getByRole("link", { name: "Download walkthrough", exact: true });
+  await expect(download).toHaveAttribute("href", "/media/tenantreach-reachassist-walkthrough.mp4");
+  await expect(download).toHaveAttribute("download", "");
   await expect(page.getByRole("link", { name: /try the demo/i }).first()).toHaveAttribute(
     "href",
     "https://mercuryreach.net/#demo",
@@ -218,10 +205,35 @@ async function assertReleaseCopyAndLinks(page) {
 
   const copy = await visibleText(page);
   expect(copy).toMatch(/demo and setup[\s\S]{0,100}MercuryReach[\s\S]{0,100}existing application/i);
+}
 
-  const download = walkthrough.getByRole("link", { name: "Download walkthrough", exact: true });
-  await expect(download).toHaveAttribute("href", "/media/tenantreach-reachassist-walkthrough.mp4");
-  await expect(download).toHaveAttribute("download", "");
+async function assertWalkthroughPlayback(page) {
+  const walkthrough = page.getByRole("region", { name: "Application walkthrough" });
+  const video = walkthrough.locator("video");
+  await expect(video).toHaveAttribute("controls", "");
+  await expect(video).not.toHaveAttribute("autoplay", "");
+  await expect(video).toHaveJSProperty("muted", false);
+  expect(await video.evaluate((node) => node.volume)).toBeGreaterThan(0);
+  await video.evaluate((node) => node.load());
+  await expect.poll(() => video.evaluate((node) => node.readyState)).toBeGreaterThanOrEqual(2);
+  expect(await video.evaluate((node) => node.duration)).toBeCloseTo(40, 0);
+  await video.evaluate((node) => node.play());
+  await expect.poll(() => video.evaluate((node) => node.currentTime)).toBeGreaterThan(0);
+  await expect.poll(() => video.evaluate((node) => node.webkitAudioDecodedByteCount), {
+    message: "The walkthrough must decode an audio track, not just play silent video.",
+  }).toBeGreaterThan(0);
+  await video.evaluate((node) => node.pause());
+  await expect.poll(() => video.evaluate((node) => node.textTracks[0]?.cues?.length ?? 0)).toBe(7);
+  expect(await video.evaluate((node) => Array.from(node.textTracks[0].cues, (cue) => cue.text).join(" ").replace(/\s+/g, " ")))
+    .toContain("You confirm before anything is sent.");
+  const transcript = walkthrough.locator("summary").filter({ hasText: "Read the walkthrough transcript" });
+  await transcript.focus();
+  await page.keyboard.press("Enter");
+  await expect(transcript.locator("..")).toHaveJSProperty("open", true);
+  await expect(transcript.locator("..").getByRole("list")).toContainText("You confirm before anything is sent.");
+  await page.keyboard.press("Enter");
+  await expect(transcript.locator("..")).toHaveJSProperty("open", false);
+  await video.evaluate((node) => { node.currentTime = 0; });
 }
 
 async function assertPlanAllowanceDisclosure(page) {
@@ -450,6 +462,7 @@ async function checkVariant(browser, variant) {
     expect(fontRequests.every((url) => new URL(url).origin === new URL(siteUrl).origin)).toBe(true);
     await assertNoVisualOverflowOrBrokenAssets(page);
     await assertSectionNavigation(page, Boolean(variant.isMobile));
+    await assertWalkthroughPlayback(page);
 
     if (variant.name === "desktop-light") {
       await assertThemeChangesWithoutReload(page);

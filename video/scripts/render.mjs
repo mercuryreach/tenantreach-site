@@ -28,6 +28,7 @@ if (process.argv.includes('--stills')) {
   let lastProgress = -1;
   await renderMedia({
     composition, serveUrl, codec: 'h264', pixelFormat: 'yuv420p', crf: 18,
+    audioCodec: 'aac', audioBitrate: '192k', sampleRate: 48000,
     concurrency: 2,
     outputLocation: path.join(output, 'tenantreach-reachassist-walkthrough.mp4'),
     onProgress: ({ progress }) => {

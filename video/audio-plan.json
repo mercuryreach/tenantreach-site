@@ -1,0 +1,66 @@
+{
+  "durationSeconds": 40,
+  "sampleRate": 48000,
+  "voice": {
+    "provider": "ElevenLabs",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "name": "Sarah - Mature, Reassuring, Confident",
+    "modelId": "eleven_multilingual_v2",
+    "format": "mp3_44100_128"
+  },
+  "music": {
+    "provider": "Suno",
+    "stylePrompt": "A refined 40-second instrumental underscore for a modern tenant communication product walkthrough. 96 BPM, 4/4, sixteen bars. Warm muted synth plucks, soft rounded bass, delicate tight electronic percussion, airy sustained chords. Clear, calm, confident, quietly optimistic. Sparse arrangement with room for spoken narration. Gentle two-second opening, steady understated pulse, a small lift in the final eight seconds, resolved final chord and short natural tail. Instrumental only. No vocals, no vocal chops, no spoken words, no dramatic drop, no loud lead melody."
+  },
+  "cues": [
+    {
+      "id": "workspace",
+      "start": 0.5,
+      "end": 4.7,
+      "text": "Meet TenantReach. Tenant communication, in one workspace.",
+      "ttsText": "Meet Tenant Reach. Tenant communication, in one workspace."
+    },
+    {
+      "id": "audience",
+      "start": 5.4,
+      "end": 10.5,
+      "text": "Choose the right people and property for every notice.",
+      "ttsText": "Choose the right people and property for every notice."
+    },
+    {
+      "id": "notice",
+      "start": 11.4,
+      "end": 16.5,
+      "text": "Draft your message, with your audience in view.",
+      "ttsText": "Draft your message, with your audience in view."
+    },
+    {
+      "id": "inbox",
+      "start": 17.4,
+      "end": 23.5,
+      "text": "Keep incoming texts organized by topic with Automatic Message Categorization.",
+      "ttsText": "Keep incoming texts organized by topic with Automatic Message Categorization."
+    },
+    {
+      "id": "reachassist",
+      "start": 24.3,
+      "end": 28.7,
+      "text": "With ReachAssist, describe the notice you want to prepare.",
+      "ttsText": "With Reach Assist, describe the notice you want to prepare."
+    },
+    {
+      "id": "review",
+      "start": 29.3,
+      "end": 33.8,
+      "text": "Review the message and recipients. You confirm before anything is sent.",
+      "ttsText": "Review the message and recipients. You confirm before anything is sent."
+    },
+    {
+      "id": "closing",
+      "start": 34.1,
+      "end": 39.9,
+      "text": "From intent to notice. You stay in control. TenantReach dot net.",
+      "ttsText": "From intent to notice. You stay in control. Tenant Reach dot net."
+    }
+  ]
+}
