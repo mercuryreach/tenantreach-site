@@ -3,10 +3,12 @@
   "classification": "Seeded SHADOW results",
   "liveDelivery": false,
   "assistant": "deterministic replay",
-  "brandingPullRequest": "https://github.com/mercuryreach/MercuryReach/pull/104",
-  "brandingCommit": "3a236e40",
+  "brandingPullRequest": "https://github.com/mercuryreach/MercuryReach/pull/106",
+  "assistantNamingPullRequest": "https://github.com/mercuryreach/MercuryReach/pull/104",
+  "appPreviewCommit": "04070fd7aab49a74232727f35cfcbd4d9d010165",
+  "brandingCommit": "ae76d754f936c3cf6f7a99f0ccac1b46e7b76502",
   "captured": "2026-10-14",
-  "source": "Dedicated synthetic Prisma seed plus three sample category messages",
+  "source": "Fresh isolated synthetic Prisma seed, Avery Hart sample recipient, and three seeded SHADOW category messages",
   "appBaseline": "5cf4bb1ea51e1620272a5f36a0ef22a6c2d185e9",
   "viewport": {
     "height": 900,
@@ -14,28 +16,28 @@
   },
   "captures": [
     {
-      "sha256": "CA1F851DD2042541A319009A2F67B102899B6C2CC43217D5AB2AA844C16F83AF",
-      "file": "audience.png"
+      "file": "audience.png",
+      "sha256": "792193c37681bb8d8937fec498fe8b53c740e92f2e7f91c786786b683c4b26d0"
     },
     {
-      "sha256": "B15A59284EB2E1727B6299C0146F07DC69D5019235DCB569B7BB7C4076141F2B",
-      "file": "inbox.png"
+      "file": "inbox.png",
+      "sha256": "e38393924fc4c0d5ceee24ced6caa0342546e2cbc09a00a837ebdba4c1dd8555"
     },
     {
-      "sha256": "046B4AF77F44428D9626330B7CA834B77E32D45DBB49C963B2AC54EF99AB9313",
-      "file": "notice.png"
+      "file": "notice.png",
+      "sha256": "fe101ee0f2db09cc95962c5654779198d21bc9f96b269882c8516e783468ed4c"
     },
     {
-      "sha256": "E5C81FB84D66793FF85A3DB1D529CF2D40B6F0F1D0E36596645CAD5BECFEB78F",
-      "file": "reachassist.png"
+      "file": "reachassist.png",
+      "sha256": "2d712ff2f718a8a5bf650a96ebe1a6f4b02eaf4842cf8620cc4d19cb2c2e8ce3"
     },
     {
-      "sha256": "D5BFBCCE8725A4DDEB24700402E6168F798B8178D507AF451E8505EDF39FECAB",
-      "file": "review.png"
+      "file": "review.png",
+      "sha256": "9533ee46409a1a3b3fc39f10c0c3c2b51b96d6514b6c8996b72fcf62b04a02de"
     },
     {
-      "sha256": "DB88B9DD584E4BF1DF5F77551C1ED648F6DDC56AD7A7C31B31B9FD72C1CCB484",
-      "file": "workspace.png"
+      "file": "workspace.png",
+      "sha256": "28a31c96eed6fc1cf03331999bb3bd4d696f3c181f1c1f702ba5462e2bd6da85"
     }
   ]
 }

@@ -17,6 +17,13 @@ npm run render
 
 The MP4 is `out/tenantreach-reachassist-walkthrough.mp4` (H.264, YUV420p, CRF 18). Seven PNG review frames and `render-manifest.json` are produced in `out/`. Publish only after checking the actual captures and rendered frames. Copying artifacts to the website is a separate release step.
 
+The October 14 logo-refresh release was normalized with FFmpeg after Remotion's Chromium 157 renderer reported full-range `yuvj420p`, despite the requested `yuv420p`. The published file is verified as limited-range `yuv420p`. When reproducing with that renderer, normalize its output before publication:
+
+```powershell
+ffmpeg -i out/tenantreach-reachassist-walkthrough.mp4 -map 0:v:0 -vf "scale=in_range=pc:out_range=tv,format=yuv420p" -c:v libx264 -preset medium -crf 18 -an -movflags +faststart out/tenantreach-reachassist-walkthrough-web.mp4
+Copy-Item out/tenantreach-reachassist-walkthrough-web.mp4 out/tenantreach-reachassist-walkthrough.mp4
+```
+
 ## Capture contract
 
 Provide these actual application viewport screenshots under `public/captures/`:
@@ -34,7 +41,9 @@ Use consistent desktop viewport dimensions, preferably 1600 × 900, at least 128
 
 ### Capture provenance
 
-The October 14, 2026 captures show the actual current application at origin/main `5cf4bb1`, with the authorized ReachAssist display rename. They use a synthetic demo workspace and English-only sample notices. Categorization displays seeded sample shadow-classification results, not a live AI inference run. The ReachAssist capture shows an actual conversation, a user request, an identified sample recipient, and a pending send summary. The final review capture shows the notice composer's actual Review step after preflight, with a sample audience and English-only notice. No send action was confirmed and no real recipients were contacted. These are labeled demonstrations of application interfaces, not evidence of message delivery or live inference.
+The October 14, 2026 logo refresh uses actual application screenshots from preview commit `04070fd7aab49a74232727f35cfcbd4d9d010165`. That preview combines the [ReachAssist display rename (PR #104)](https://github.com/mercuryreach/MercuryReach/pull/104) and the [approved solid Send logo (PR #106)](https://github.com/mercuryreach/MercuryReach/pull/106), on application baseline `5cf4bb1ea51e1620272a5f36a0ef22a6c2d185e9`. Publishing these marketing captures does not deploy either application change.
+
+The captures use a freshly seeded, isolated synthetic demo workspace and English-only sample notices. Categorization displays seeded sample shadow-classification results, not a live AI inference run. ReachAssist runs in deterministic mode and shows an actual conversation, an identified sample recipient, and a pending send summary. The final capture shows the notice composer's actual Review step after preflight. No send action was confirmed and no real recipients were contacted. Capture hashes and the source snapshot are recorded in `capture-manifest.json`. The video story, timing, captions, and delivery claims are unchanged.
 
 ## Timing and transcript
 
