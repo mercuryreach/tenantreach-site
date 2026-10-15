@@ -149,7 +149,7 @@ async function assertSectionNavigation(page, isMobile) {
   const sections = [
     ["#demo", "Demo"],
     ["#workflow", "How it works"],
-    ["#reachassist", "ReachAssist"],
+    ["#reachassist", "Tenant Assist"],
     ["#pricing", "Plans"],
     ["#faq", "Questions"],
   ];
@@ -186,9 +186,9 @@ async function assertSectionNavigation(page, isMobile) {
 }
 
 async function assertReleaseCopyAndLinks(page) {
-  const assist = page.getByRole("region", { name: "Talk to ReachAssist. Message your tenants." });
+  const assist = page.getByRole("region", { name: "Talk to Tenant Assist. Message your tenants." });
   await expect(assist).toBeVisible();
-  await expect(assist.getByRole("img", { name: /ReachAssist preparing a tenant notice/ })).toBeVisible();
+  await expect(assist.getByRole("img", { name: /Tenant Assist preparing a tenant notice/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Automatic Message Categorization", exact: true })).toBeVisible();
   const walkthrough = page.getByRole("region", { name: "Application walkthrough" });
   await expect(walkthrough).toBeVisible();
@@ -200,11 +200,12 @@ async function assertReleaseCopyAndLinks(page) {
   await expect(download).toHaveAttribute("download", "");
   await expect(page.getByRole("link", { name: /try the demo/i }).first()).toHaveAttribute(
     "href",
-    "https://mercuryreach.net/#demo",
+    "https://tenantreach.app/demo#demo",
   );
 
   const copy = await visibleText(page);
-  expect(copy).toMatch(/demo and setup[\s\S]{0,100}MercuryReach[\s\S]{0,100}existing application/i);
+  expect(copy).toMatch(/demo and setup open in the TenantReach app/i);
+  expect(copy).not.toMatch(/MercuryReach/);
 }
 
 async function assertWalkthroughPlayback(page) {

@@ -16,7 +16,7 @@ import {
 
 import { defaultBillingPlanCatalog } from "./plans";
 const COMPANY_NAME = "Mercurion Labs, LLC";
-const appOrigin = "https://mercuryreach.net";
+const appOrigin = "https://tenantreach.app";
 const formatCurrencyFromCents = (cents: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(cents / 100);
 import styles from "./landing.module.css";
 
@@ -29,7 +29,7 @@ const geist = localFont({
 
 const title = "TenantReach | Every resident. One clear message.";
 const description =
-  "Message tenants with ReachAssist AI, automatically categorize messages, and keep texts, calls, and replies together in TenantReach.";
+  "Message tenants with Tenant Assist AI, automatically categorize messages, and keep texts, calls, and replies together in TenantReach.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tenantreach.net"),
@@ -58,7 +58,7 @@ export const viewport: Viewport = {
 const navigation = [
   ["#demo", "Demo"],
   ["#workflow", "How it works"],
-  ["#reachassist", "ReachAssist"],
+  ["#reachassist", "Tenant Assist"],
   ["#pricing", "Plans"],
   ["#faq", "Questions"],
 ] as const;
@@ -83,19 +83,14 @@ const workflowSteps = [
 
 const faqItems = [
   {
-    question: "Can I talk to ReachAssist to message tenants?",
+    question: "Can I talk to Tenant Assist to message tenants?",
     answer:
-      "Yes. Tell ReachAssist who you want to reach and what you want to say. ReachAssist AI helps prepare your message, so you can review the audience and wording before sending.",
+      "Yes. Tell Tenant Assist who you want to reach and what you want to say. Tenant Assist AI helps prepare your message, so you can review the audience and wording before sending.",
   },
   {
     question: "How does Automatic Message Categorization help?",
     answer:
       "When Automatic Message Categorization is enabled for your workspace, incoming messages are organized by category, helping your team find conversations that need attention and keep track of follow-up.",
-  },
-  {
-    question: "Why do demo and setup links open MercuryReach?",
-    answer:
-      "TenantReach's demo and account setup currently run in our existing MercuryReach application. You will see MercuryReach branding there. You can try the simulated demo without creating an account; live resident delivery stays off until your team completes setup.",
   },
   {
     question: "What kinds of notices can I send?",
@@ -240,13 +235,13 @@ export default function MarketingHomePage() {
             <a className={styles.button} href={`${appOrigin}/signup`}>
               Start beta setup <ArrowRight aria-hidden="true" size={17} />
             </a>
-            <a className={styles.secondaryButton} href={`${appOrigin}/#demo`}>
+            <a className={styles.secondaryButton} href={`${appOrigin}/demo#demo`}>
               Try the demo{" "}
               <ArrowUpRight aria-hidden="true" size={16} />
             </a>
           </div>
           <p className={styles.heroNote}>
-            Demo and setup open in MercuryReach, our existing application.
+            Demo and setup open in the TenantReach app.
             <br />Try the demo without an account. No resident is contacted.
           </p>
         </section>
@@ -258,7 +253,7 @@ export default function MarketingHomePage() {
         >
           <figure className={styles.preview}>
             <div className={styles.previewBar}>
-              <span id="walkthrough-title">See TenantReach and ReachAssist in action.</span>
+              <span id="walkthrough-title">See TenantReach and Tenant Assist in action.</span>
               <span>40-second walkthrough</span>
             </div>
             <video
@@ -289,7 +284,7 @@ export default function MarketingHomePage() {
               <li>Choose the right people and property for every notice.</li>
               <li>Draft your message, with your audience in view.</li>
               <li>Keep incoming texts organized by topic with Automatic Message Categorization.</li>
-              <li>With ReachAssist, describe the notice you want to prepare.</li>
+              <li>With Tenant Assist, describe the notice you want to prepare.</li>
               <li>Review the message and recipients. You confirm before anything is sent.</li>
               <li>From intent to notice. You stay in control. TenantReach dot net.</li>
             </ol>
@@ -314,7 +309,7 @@ export default function MarketingHomePage() {
               <MessageSquare aria-hidden="true" size={18} /> Automatic Message Categorization
             </span>
             <span>
-              <MessageSquare aria-hidden="true" size={18} /> ReachAssist AI
+              <MessageSquare aria-hidden="true" size={18} /> Tenant Assist AI
             </span>
           </div>
         </section>
@@ -352,9 +347,9 @@ export default function MarketingHomePage() {
           aria-labelledby="reachassist-title"
         >
           <div className={styles.sectionHeading}>
-            <h2 id="reachassist-title">Talk to ReachAssist.<br />Message your tenants.</h2>
+            <h2 id="reachassist-title">Talk to Tenant Assist.<br />Message your tenants.</h2>
             <p>
-              Tell ReachAssist AI who you want to reach and what you want to say.
+              Tell Tenant Assist AI who you want to reach and what you want to say.
               Prepare a notice in conversation, then review your audience and
               message before sending.
             </p>
@@ -362,14 +357,14 @@ export default function MarketingHomePage() {
           <figure className={`${styles.preview} ${styles.assistScreenshot}`}>
             <Image
               src="/media/reachassist-workspace.png"
-              alt="ReachAssist preparing a tenant notice inside the application, with a conversation and a draft ready for review in a sample workspace."
+              alt="Tenant Assist preparing a tenant notice inside the application, with a conversation and a draft ready for review in a sample workspace."
               width={1440}
               height={900}
               sizes="(max-width: 760px) 100vw, 1120px"
             />
             <figcaption>
-              ReachAssist application preview · synthetic demo workspace.
-              <a href="/media/reachassist-workspace.png" target="_blank" rel="noopener noreferrer">View full-size ReachAssist screenshot <ArrowUpRight aria-hidden="true" size={14} /></a>
+              Tenant Assist application preview · synthetic demo workspace.
+              <a href="/media/reachassist-workspace.png" target="_blank" rel="noopener noreferrer">View full-size Tenant Assist screenshot <ArrowUpRight aria-hidden="true" size={14} /></a>
             </figcaption>
           </figure>
           <p className={styles.walkthrough}>
@@ -410,11 +405,11 @@ export default function MarketingHomePage() {
               <div className={styles.demoNote}>
                 <ShieldCheck aria-hidden="true" size={20} />
                 <p>
-                  The demo opens in MercuryReach, our existing application.
+                  The demo opens in the TenantReach app.
                   It is a simulation: no resident is contacted and no account is needed.
                 </p>
               </div>
-              <a className={styles.button} href={`${appOrigin}/#demo`}>
+              <a className={styles.button} href={`${appOrigin}/demo#demo`}>
                 Try the demo <ArrowUpRight aria-hidden="true" size={17} />
               </a>
             </div>
@@ -609,7 +604,7 @@ export default function MarketingHomePage() {
               Explore Enterprise setup <ArrowUpRight aria-hidden="true" size={14} />
             </a>
           </p>
-          <p className={styles.handoffNote}>Plan selection opens MercuryReach account setup. Live delivery is enabled separately.</p>
+          <p className={styles.handoffNote}>Plan selection opens TenantReach account setup. Live delivery is enabled separately.</p>
         </section>
 
         <section
@@ -651,7 +646,7 @@ export default function MarketingHomePage() {
             <a className={styles.button} href={`${appOrigin}/signup`}>
               Start beta setup <ArrowRight aria-hidden="true" size={17} />
             </a>
-            <p className={styles.handoffNote}>Continue in MercuryReach to set up your workspace. Rehearse before enabling live texts or calls.</p>
+            <p className={styles.handoffNote}>Continue in TenantReach to set up your workspace. Rehearse before enabling live texts or calls.</p>
           </div>
         </section>
       </main>
